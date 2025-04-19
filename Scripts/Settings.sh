@@ -74,5 +74,8 @@ fi
 #编译器优化
 if [[ $WRT_TARGET != *"X86"* ]]; then
 	echo "CONFIG_TARGET_OPTIONS=y" >> ./.config
-	echo "CONFIG_TARGET_OPTIMIZATION=\"-O2 -pipe -march=armv8-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53\"" >> ./.config
+	# 适配6.12内核的编译参数
+	echo "CONFIG_TARGET_OPTIMIZATION=\"-O2 -pipe -march=armv8-a+crypto+crc -mcpu=cortex-a53+crypto+crc -mtune=cortex-a53 -fno-caller-saves -fno-plt\"" >> ./.config
+	echo "CONFIG_DEVEL_MODE=y" >> ./.config
+	echo "CONFIG_TOOLCHAIN_DEBUG=y" >> ./.config
 fi
