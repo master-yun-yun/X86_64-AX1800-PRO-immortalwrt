@@ -93,7 +93,7 @@ jobs:
 
       - name: Clone Code
         run: |
-          git clone --depth=1 --shallow-submodules --branch $WRT_BRANCH "https://github.com/LiBwrt/openwrt-6.x.git" ./wrt/
+          git clone --depth=1 --single-branch --branch $WRT_BRANCH "https://github.com/LiBwrt/openwrt-6.x.git" ./wrt/ --no-recurse-submodules
 
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
 
