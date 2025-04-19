@@ -160,9 +160,12 @@ jobs:
         run: |
           cd ./wrt/
     
+          # 使用LiBwrt官方推荐的feeds处理流程
           ./scripts/feeds clean
           ./scripts/feeds update -a
-          ./scripts/feeds install -a -f
+          ./scripts/feeds install -a
+          make defconfig
+          
 
       - name: Custom Packages
         run: |
