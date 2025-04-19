@@ -95,7 +95,9 @@ jobs:
 
       - name: Clone Code
         run: |
-          git clone --depth=1 --single-branch --branch $WRT_BRANCH "https://github.com/LiBwrt/openwrt-6.x.git" ./wrt/ --no-recurse-submodules
+          # 使用LiBwrt推荐的源码获取方式
+          git clone --depth 1 --single-branch --branch $WRT_BRANCH "https://github.com/LiBwrt/openwrt-6.x.git" ./wrt/
+          cd ./wrt/ && git submodule update --init --recursive --depth=1
 
           cd ./wrt/ && echo "WRT_HASH=$(git log -1 --pretty=format:'%h')" >> $GITHUB_ENV
 
