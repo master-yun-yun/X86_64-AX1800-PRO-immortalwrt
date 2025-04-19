@@ -43,10 +43,7 @@ UPDATE_PACKAGE() {
 		find ./$PKG_NAME -type f -name "Makefile" -exec sed -i 's/..\/..\/lang\/golang\/golang-package.mk/$(TOPDIR)\/feeds\/packages\/lang\/golang\/golang-package.mk/g' {} +
   		# 强制指定automake版本
 		if [[ $PKG_NAME == *"aliyundrive-webdav"* ]]; then
-			sed -i 's/autoreconf -fi/autoreconf -vfi --install --force/m' ./$PKG_NAME/Makefile
-			sed -i '/define Build\/Prepare/a\\t$(INSTALL_DIR) $(STAGING_DIR_HOST)/bin' ./$PKG_NAME/Makefile
-			sed -i '/define Build\/Prepare/a\\t$(LN) /usr/bin/automake $(STAGING_DIR_HOST)/bin/automake' ./$PKG_NAME/Makefile
-			sed -i '/define Build\/Prepare/a\\t$(LN) /usr/bin/aclocal $(STAGING_DIR_HOST)/bin/aclocal' ./$PKG_NAME/Makefile
+                           sed -i 's/autoreconf -fi/autoreconf -vfi --install --force/m' ./$PKG_NAME/Makefile  # 仅保留通用修复
 		fi
 	##fi
 ##}
