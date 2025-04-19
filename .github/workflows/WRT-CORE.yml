@@ -74,7 +74,7 @@ jobs:
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
           sudo -E apt -yqq install dos2unix libfuse-dev
-          sudo -E apt-get -y install autoconf-archive automake=1:1.16.1-4ubuntu6 bc binutils-dev bison flex libtool-bin libgmp-dev libmpfr-dev libmpc-dev libisl-dev zlib1g-dev libexpat1-dev libssl-dev libelf-dev libncurses-dev libxml2-dev libxslt1-dev python3-dev texinfo zstd
+          sudo -E apt-get -y install autoconf-archive automake bc binutils-dev bison flex libtool-bin libgmp-dev libmpfr-dev libmpc-dev libisl-dev zlib1g-dev libexpat1-dev libssl-dev libelf-dev libncurses-dev libxml2-dev libxslt1-dev python3-dev texinfo zstd
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
