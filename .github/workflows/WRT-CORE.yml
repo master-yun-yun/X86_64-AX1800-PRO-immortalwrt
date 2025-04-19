@@ -74,7 +74,9 @@ jobs:
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
           sudo -E apt -yqq install dos2unix libfuse-dev
-          sudo -E apt-get -y install autoconf-archive automake bc binutils binutils-dev bison flex libtool-bin libgmp-dev libmpfr-dev libmpc-dev libisl-dev zlib1g-dev libexpat1-dev libssl-dev libelf-dev libncurses-dev libxml2-dev libxslt1-dev python3-dev texinfo zstd build-essential
+          # 使用LiBwrt官方推荐的依赖列表
+          sudo -E apt-get -y install ack antlr3 asciidoc autoconf automake autopoint binutils bison build-essential bzip2 ccache cmake cpio curl device-tree-compiler fastjar flex gawk gettext gcc-multilib g++-multilib git gperf haveged help2man intltool libc6-dev-i386 libelf-dev libglib2.0-dev libgmp3-dev libltdl-dev libmpc-dev libmpfr-dev libncurses5-dev libncursesw5-dev libreadline-dev libssl-dev libtool lrzsz mkisofs msmtp nano ninja-build p7zip p7zip-full patch pkgconf python3 python3-pip libpython3-dev qemu-utils rsync scons squashfs-tools subversion swig texinfo uglifyjs upx-ucl unzip vim wget xmlto xxd zlib1g-dev
+          sudo -E pip3 install --upgrade pip wheel setuptools
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
