@@ -119,6 +119,7 @@ jobs:
         id: check-cache
         if: env.WRT_TEST != 'true'
         uses: actions/cache@main
+        continue-on-error: true
         with:
           key: ${{env.WRT_CONFIG}}-${{env.WRT_VER}}-${{env.WRT_HASH}}
           restore-keys: ${{env.WRT_CONFIG}}-${{env.WRT_VER}}
