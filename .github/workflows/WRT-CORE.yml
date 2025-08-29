@@ -75,7 +75,7 @@ jobs:
           sudo -E apt -yqq autoclean
           sudo -E apt -yqq clean
           sudo -E apt -yqq install dos2unix python3-netifaces libfuse-dev python3-dev gnutls-dev libreadline-dev libacl1-dev libattr1-dev libpam0g-dev
-          sudo bash -c 'bash <(curl -sL https://build-scripts.immortalwrt.org/init_build_environment.sh)'
+          sudo bash $GITHUB_WORKSPACE/Scripts/init_build_environment.sh
           sudo -E systemctl daemon-reload
           sudo -E timedatectl set-timezone "Asia/Shanghai"
 
