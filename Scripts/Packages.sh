@@ -240,7 +240,7 @@ UPDATE_PACKAGE "luci-app-store" "shidahuilang/openwrt-package" "Immortalwrt" "pk
 UPDATE_PACKAGE "webdav2" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
 UPDATE_PACKAGE "unishare" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
 UPDATE_PACKAGE "luci-app-unishare" "shidahuilang/openwrt-package" "Immortalwrt" "pkg"
-
+UPDATE_PACKAGE "luci-app-daed" "QiuSimons/luci-app-daed" "master"
 #luci-app-athena-led-雅典娜led屏幕显示（第一个源显示效果不好）
 #UPDATE_PACKAGE "luci-app-athena-led" "haipengno1/luci-app-athena-led" "main"
 UPDATE_PACKAGE "luci-app-athena-led" "NONGFAH/luci-app-athena-led" "main"
@@ -252,3 +252,7 @@ if [ -d "luci-app-athena-led" ]; then
     echo "Added execute permissions for athena_led files."
 fi
 #-------------------2025.05.31-测试-----------------#
+
+#修复daed/Makefile
+rm -rf luci-app-daed/daed/Makefile && cp -r $GITHUB_WORKSPACE/patches/daed/Makefile luci-app-daed/daed/
+cat luci-app-daed/daed/Makefile
