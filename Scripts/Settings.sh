@@ -1,5 +1,5 @@
 #!/bin/bash
-
+. $(dirname "$(realpath "$0")")/function.sh
 #修改默认主题
 sed -i "s/luci-theme-bootstrap/luci-theme-$WRT_THEME/g" $(find ./feeds/luci/collections/ -type f -name "Makefile")
 #修改immortalwrt.lan关联IP
@@ -30,6 +30,15 @@ CFG_FILE="./package/base-files/files/bin/config_generate"
 sed -i "s/192\.168\.[0-9]*\.[0-9]*/$WRT_IP/g" $CFG_FILE
 #修改默认主机名
 sed -i "s/hostname='.*'/hostname='$WRT_NAME'/g" $CFG_FILE
+
+vlmcsd_patches="./feeds/packages/net/vlmcsd/patches/"
+mkdir -p $vlmcsd_patches && cp -f ../patches/001-fix_compile_with_ccache.patch $vlmcsd_patches
+
+#修复dropbear
+#sed -i "s/Interface/DirectInterface/" ./package/network/services/dropbear/files/dropbear.config
+sed -i "/Interface/d" ./package/network/services/dropbear/files/dropbear.config
+#拷贝files 文件夹到编译目录
+cp -r ../files ./
 
 #配置文件修改
 #echo "CONFIG_PACKAGE_luci=y" >> ./.config
