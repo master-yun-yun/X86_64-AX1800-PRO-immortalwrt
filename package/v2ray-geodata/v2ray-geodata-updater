@@ -1,0 +1,96 @@
+#!/bin/sh
+
+LOGGER_TAG=v2ray-geodata-updater
+
+log () {
+  echo $@
+  logger -t $LOGGER_TAG "$@"
+}
+
+# 定义代理源数组
+proxies="
+https://ghproxy.cfd
+https://ghps.cc
+https://ghfast.top
+https://hub.gitmirror.com
+"
+
+# 定义下载函数
+download_proxy() {
+    url="$1"  # 传入的原始 URL
+    path="$2"  # 保存路径
+    success=false
+    full_url="${url}"
+
+    if curl -s -L -o "$path" "$full_url"; then
+      log "下载成功: $full_url"
+      success=true
+    else
+      # 遍历所有代理源
+      for proxy in $proxies; do
+        log "尝试通过代理源: $proxy 下载..."
+          # 拼接代理后的完整 URL
+        full_url="${proxy}/${url}"
+        # 使用 curl 尝试下载
+        if curl -s -L -o "$path" "$full_url"; then
+          log "下载成功: $full_url"
+          success=true
+          break
+        else
+          log "下载失败: $full_url，尝试下一个代理源..."
+        fi
+      done
+    fi
+    if [ "$success" = false ]; then
+        log "所有代理源均下载失败，请检查网络或代理源状态。"
+        return 1
+    fi
+}
+
+#GEOIP_URL=$(curl -sL https://api.github.com/repos/v2ray/geoip/releases/latest | jq -r '.assets[].browser_download_url')
+GEOIP_URL="https://github.com/Loyalsoldier/geoip/releases/latest/download/geoip.dat"
+GEOIP_SHA256SUM_URL="https://github.com/Loyalsoldier/geoip/releases/latest/download/geoip.dat.sha256sum"
+
+#GEOSITE_URL=$(curl -sL https://api.github.com/repos/v2ray/domain-list-community/releases/latest | jq -r '.assets[].browser_download_url')
+GEOSITE_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat"
+GEOSITE_SHA256SUM_URL="https://github.com/Loyalsoldier/v2ray-rules-dat/releases/latest/download/geosite.dat.sha256sum"
+
+GEOIP_PATH=/usr/share/v2ray/geoip.dat
+GEOSITE_PATH=/usr/share/v2ray/geosite.dat
+
+cd /tmp
+update_success=false
+log "downloading geoip.dat..."
+download_proxy $GEOIP_URL /tmp/geoip.dat && download_proxy $GEOIP_SHA256SUM_URL /tmp/geoip.dat.sha256sum
+if sha256sum -c /tmp/geoip.dat.sha256sum; then
+   mv /tmp/geoip.dat $GEOIP_PATH && rm -rf /tmp/geoip.dat.sha256sum
+   log "v2ray geoip.dat updated"
+   update_success=true
+else
+  log "failed to download latest geoip.dat, not updating!"
+fi
+log "downloading geosite.dat..."
+download_proxy $GEOSITE_URL /tmp/geosite.dat && download_proxy $GEOSITE_SHA256SUM_URL /tmp/geosite.dat.sha256sum
+if sha256sum -c /tmp/geosite.dat.sha256sum; then
+  mv /tmp/geosite.dat $GEOSITE_PATH && rm -rf /tmp/geosite.dat.sha256sum
+  log "v2ray geosite.dat updated"
+  update_success=true
+else
+  log "failed to download latest geosite.dat, not updating!"
+fi
+
+#重启dead 或者dae
+if [ "$update_success" = true ]; then
+  if /etc/init.d/daed running; then
+    log "daed is reloading"
+    /etc/init.d/daed restart
+    log "daed has reloaded"
+  elif /etc/init.d/dae running; then
+    log "dae is reloading"
+    /etc/init.d/dae hot_reload
+    log "dae has reloaded"
+  fi
+fi
+
+
+

@@ -244,6 +244,7 @@ UPDATE_PACKAGE "luci-app-daed" "QiuSimons/luci-app-daed" "master"
 #luci-app-athena-led-雅典娜led屏幕显示（第一个源显示效果不好）
 #UPDATE_PACKAGE "luci-app-athena-led" "haipengno1/luci-app-athena-led" "main"
 UPDATE_PACKAGE "luci-app-athena-led" "NONGFAH/luci-app-athena-led" "main"
+UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5" "" "v2dat"
 #-------------------2025.04.12-测试-----------------#
 # 添加雅典娜LED执行权限
 if [ -d "luci-app-athena-led" ]; then
@@ -252,7 +253,9 @@ if [ -d "luci-app-athena-led" ]; then
     echo "Added execute permissions for athena_led files."
 fi
 #-------------------2025.05.31-测试-----------------#
-
+# 删除官方的v2ray-geodata和daed相关文件
+rm -rf ../feeds/luci/applications/luci-app-{passwall*,mosdns,dockerman,dae*,bypass*}
+rm -rf ../feeds/packages/net/{v2ray-geodata,dae*}
 #修复daed/Makefile
 rm -rf luci-app-daed/daed/Makefile && cp -r $GITHUB_WORKSPACE/patches/daed/Makefile luci-app-daed/daed/
 cat luci-app-daed/daed/Makefile

@@ -20,4 +20,4 @@ CONFIG_TARGET_DEVICE_qualcommax_ipq60xx_DEVICE_jdcloud_re-cs-02=y
 
 #添加插件
 #luci-app-athena-led雅典娜led显示控制
-CONFIG_PACKAGE_luci-app-athena-led=y
+CONFIG_PACKAGE_luci-app-athena-led=n
