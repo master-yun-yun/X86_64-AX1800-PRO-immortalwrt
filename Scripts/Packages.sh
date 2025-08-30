@@ -155,6 +155,7 @@ UPDATE_VERSION "sing-box"
 UPDATE_VERSION "tailscale"
 
 #---------------------------------以下自定义源-------------------------------------#
+UPDATE_PACKAGE "argon" "sbwml/luci-theme-argon" "openwrt-24.10"
 
 #全能推送PushBot----OK
 UPDATE_PACKAGE "luci-app-pushbot" "zzsj0928/luci-app-pushbot" "master"
@@ -245,6 +246,8 @@ UPDATE_PACKAGE "luci-app-daed" "QiuSimons/luci-app-daed" "master"
 #UPDATE_PACKAGE "luci-app-athena-led" "haipengno1/luci-app-athena-led" "main"
 UPDATE_PACKAGE "luci-app-athena-led" "NONGFAH/luci-app-athena-led" "main"
 UPDATE_PACKAGE "mosdns" "sbwml/luci-app-mosdns" "v5" "" "v2dat"
+UPDATE_PACKAGE "nikki" "nikkinikki-org/OpenWrt-nikki" "main"
+UPDATE_PACKAGE "momo" "nikkinikki-org/OpenWrt-momo" "main"
 #-------------------2025.04.12-测试-----------------#
 # 添加雅典娜LED执行权限
 if [ -d "luci-app-athena-led" ]; then
